@@ -3,8 +3,8 @@ Simple, but featureful, to do list CLI application.
 
 ## Usage
 ```
-todo [command] [arguments] [flags]
-> todo --help shows all available commands
+$ todo [command] [arguments] [flags]
+$ todo --help shows all available commands
 ```
 
 ## To do
