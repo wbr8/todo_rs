@@ -1,3 +1,4 @@
+use comfy_table::presets::UTF8_FULL;
 use comfy_table::{Cell, Row, Table};
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -73,7 +74,12 @@ impl TodoList {
         }
 
         let mut table = Table::new();
-        table.set_header(vec!["Index", "Description", "Due Date", "Completed"]);
+        table.load_preset(UTF8_FULL).set_header(vec![
+            "Index",
+            "Description",
+            "Due Date",
+            "Completed",
+        ]);
 
         for (i, task) in self.tasks.iter().enumerate() {
             let due_date_str = match &task.due_date {
