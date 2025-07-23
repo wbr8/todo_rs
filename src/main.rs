@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use todo::TodoList;
+use dirs;
 
 #[derive(Parser)]
 #[command(name = "todo")]
@@ -35,7 +36,14 @@ fn main() {
     let tasks_file = cli.file.unwrap_or_else(|| {
         std::env::var("TASKS_FILE")
             .map(PathBuf::from)
-            .unwrap_or_else(|_| PathBuf::from(".to_do.json"))
+            .unwrap_or_else(|_| {
+                dirs::home_dir()
+                    .map(|mut path| {
+                        path.push(".to_do.json");
+                        path
+                    })
+                    .unwrap_or_else(|| PathBuf::from(".to_do.json")) // Fallback to current dir if home_dir fails
+            })
     });
 
     let mut todo_list = TodoList::load(tasks_file.to_str().unwrap());
