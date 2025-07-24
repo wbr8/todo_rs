@@ -109,3 +109,31 @@ fn test_invalid_index() {
         .success() // The program should still exit successfully
         .stdout(predicate::str::contains("No task at index 99"));
 }
+
+#[test]
+fn test_cleanup() {
+    let test_file = "test_cleanup.json";
+
+    let _ = fs::remove_file(test_file);
+
+    let mut cmd = get_cmd();
+    cmd.args(["--file", test_file, "add", "Fix the bugs"])
+        .assert()
+        .success();
+
+    let mut cmd = get_cmd();
+    cmd.args(["--file", test_file, "complete", "0"])
+        .assert()
+        .success();
+
+    let mut cmd = get_cmd();
+    cmd.args(["--file", test_file, "clean"]).assert().success();
+
+    let mut cmd = get_cmd();
+    cmd.args(["--file", test_file, "list"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("No tasks to display."));
+
+    fs::remove_file(test_file).unwrap();
+}

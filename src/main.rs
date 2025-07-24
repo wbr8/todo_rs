@@ -78,7 +78,8 @@ fn main() {
             }
         }
         Commands::Clean => {
-            for i in (0..todo_list.tasks.len()).rev() {     // iterate backwards to avoid skipped items
+            for i in (0..todo_list.tasks.len()).rev() {
+                // iterate backwards to avoid skipped items
                 if todo_list.tasks[i].completed {
                     todo_list.remove(i);
                 }
