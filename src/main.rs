@@ -84,6 +84,9 @@ fn main() {
                     todo_list.remove(i);
                 }
             }
+            if let Err(e) = todo_list.save(tasks_file.to_str().unwrap()) {
+                eprintln!("Failed to save tasks: {e}");
+            }
         }
     }
 }
