@@ -1,5 +1,4 @@
 use clap::{Parser, Subcommand};
-use dirs;
 use std::path::PathBuf;
 use todo::TodoList;
 
@@ -55,6 +54,7 @@ fn main() {
             if let Err(e) = todo_list.save(tasks_file.to_str().unwrap()) {
                 eprintln!("Failed to save tasks: {e}");
             }
+            todo_list.show();
         }
         Commands::List => {
             todo_list.show();
@@ -67,6 +67,7 @@ fn main() {
             } else {
                 println!("No task at index {index}");
             }
+            todo_list.show();
         }
         Commands::Remove { index } => {
             if todo_list.remove(index) {
@@ -76,6 +77,7 @@ fn main() {
             } else {
                 println!("No task at index {index}");
             }
+            todo_list.show();
         }
         Commands::Clean => {
             for i in (0..todo_list.tasks.len()).rev() {
@@ -87,6 +89,7 @@ fn main() {
             if let Err(e) = todo_list.save(tasks_file.to_str().unwrap()) {
                 eprintln!("Failed to save tasks: {e}");
             }
+            todo_list.show();
         }
     }
 }
